@@ -7,6 +7,7 @@ const ApiError = require("./utils/ApiError");
 const app = express();
 const returnTableRoutes = require("./routes/returnTable.route");
 const pressTableRoutes = require("./routes/pressTable.route");
+const shipReturnRoutes = require("./routes/shipReturn.route");
 
 const PORT = process.env.PORT || 5000;
 
@@ -19,6 +20,7 @@ app.use(cors());
 // routes middlewares 
 app.use("/api/v1/return-table",returnTableRoutes);
 app.use("/api/v1/press-table",pressTableRoutes);
+app.use("/api/v1/ship-record",shipReturnRoutes)
 
 
 // mongodb connection 

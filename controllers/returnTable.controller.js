@@ -6,11 +6,11 @@ const ApiResponse = require("../utils/ApiResponse");
 // create return record
 const addReturnTableRecord = async (req, res, next) => {
   try {
-    const { styleNumber, size, color, channel, location, employee_name, order_id } = req.body;
+    const { styleNumber, size, color, channel, employee_name, order_id } = req.body;
 
     // Check for missing fields
     if (
-      [styleNumber, size, color, channel, location, employee_name, order_id].some(
+      [styleNumber, size, color, channel, employee_name, order_id].some(
         (field) => !field
       )
     ) {
@@ -29,7 +29,7 @@ const addReturnTableRecord = async (req, res, next) => {
       size,
       color,
       channel,
-      location,
+      location:"Return Table",
       employee_name,
       order_id,
     });
