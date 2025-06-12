@@ -61,6 +61,27 @@ const deleteSessionProducts = async (req, res, next) => {
   }
 };
 
-module.exports = {deleteSessionProducts, saveSessionProducts, getInventoryTableRecords};
+const deleteSingleSessionProduct = async(req,res,next)=>{
+  try {
+    const {styleNumber,size} = req.body;
+    if(!styleNumber || !size){
+      return res.status(400).json({message:"Style Number and size required"});
+    }
+    
+    const recordExists = await InventoryTable.findOne({styleNumber,size});
+
+    if(!recordExists){
+      return res.status(404).json({message:"Record not found"});
+    }
+
+    const session_id_record = await InventoryTable.findByIdAndDelete(recordExists._id);
+    
+    res.status(200).json({success:true,message:"Record deleted successfully.",session_id_record});
+  } catch (error) {
+    next(err);
+  }
+}
+
+module.exports = {deleteSessionProducts, saveSessionProducts, getInventoryTableRecords , deleteSingleSessionProduct};
 
 
