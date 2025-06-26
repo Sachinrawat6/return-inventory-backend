@@ -57,7 +57,7 @@ const getReturnTableRecords = async(_,res,next)=>{
         next(error)
     }
 }
-// const findRecord = await ReturnTable.findOne({order_id});
+
 
 // delete return record
 // const deleteReturnTableRecord = async(req,res,next)=>{

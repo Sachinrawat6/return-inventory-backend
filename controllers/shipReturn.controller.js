@@ -21,24 +21,24 @@ const shipReturn = async(req,res,next)=>{
         // Build dynamic query
         const query = order_id
           ? { order_id }
-          : { style_number, Size };
+          : { styleNumber:style_number,size: Size };
 
-     const record = await PressTable.findOne({query});
+     const record = await PressTable.findOne(query);
      if(!record){
-         throw new ApiError(404,`${order_id || style_number && Size}  not found.`);
+         throw new ApiError(404,`${order_id || style_number +"-"+ Size}  not found.`);
      }
  
     //  fetching press table record and deleting from press table and added to ship record 
     const {styleNumber,size,color,employee_name,channel} = record;
     
     // check if record exists 
-    const recordExists = await ShipReturn.findOne({order_id});
+    const recordExists = await ShipReturn.findOne(query);
 
     if(recordExists){
         throw new ApiError(409,`${order_id} already exists`)
     }
     const addedToShipRecord = await ShipReturn.create({
-       styleNumber,size,color,location:"Shipped",employee_name,order_id ,channel
+       styleNumber,size,color,location:"Shipped",employee_name,order_id:record?.order_id ,channel
     })
 
     const prssTableRecordDelete = await PressTable.findByIdAndDelete(record._id)
