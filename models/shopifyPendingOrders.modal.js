@@ -21,7 +21,21 @@ const pendingOrderSchema = new mongoose.Schema({
   quantity: {
     type: Number,
     required: true
+  },
+  shipping_method:{
+    type:String,
+  },
+  order_status:{
+    type:String,
+    required:true,
+  },
+  contact_number:{
+    type:String,
+  },
+  payment_status:{
+    type:String,
   }
+
 }, { timestamps: true });
 
 const PendingOrder = mongoose.model("PendingOrder", pendingOrderSchema);
