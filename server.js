@@ -15,19 +15,20 @@ const shopifyPendingOrdersRoutes = require("./routes/pendingOrder.routes")
 const shopifyCancelOrdersRoute = require("./routes/cancelOrder.routes");
 const shopifyConfirmOrdersRoutes = require("./routes/confirmOrder.routes");
 
+
 const PORT = process.env.PORT || 5000;
 
 // global middlewares 
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 
 // routes middlewares for return inventory management
-app.use("/api/v1/return-table",returnTableRoutes);
-app.use("/api/v1/press-table",pressTableRoutes);
-app.use("/api/v1/ship-record",shipReturnRoutes)
-app.use("/api/v1/inventory-table",inventoryTableRoutes);
+app.use("/api/v1/return-table", returnTableRoutes);
+app.use("/api/v1/press-table", pressTableRoutes);
+app.use("/api/v1/ship-record", shipReturnRoutes)
+app.use("/api/v1/inventory-table", inventoryTableRoutes);
 
 
 
@@ -42,20 +43,20 @@ app.use("/api/v1/inventory-table",inventoryTableRoutes);
 
 
 // routes for shopify order management 
-app.use("/api/v1/shopify",shopifyPendingOrdersRoutes);
-app.use("/api/v1/shopify",shopifyCancelOrdersRoute);
-app.use("/api/v1/shopify",shopifyConfirmOrdersRoutes);
+app.use("/api/v1/shopify", shopifyPendingOrdersRoutes);
+app.use("/api/v1/shopify", shopifyCancelOrdersRoute);
+app.use("/api/v1/shopify", shopifyConfirmOrdersRoutes);
 
 
 // mongodb connection 
-connectDB().then(()=>{
-    app.listen(PORT,()=>{
+connectDB().then(() => {
+    app.listen(PORT, () => {
         console.log(`The server is running on ${PORT}`);
     })
 })
-.catch((error)=>{
-    throw new ApiError(500,"Failed to connect with database!")
-})
+    .catch((error) => {
+        throw new ApiError(500, "Failed to connect with database!")
+    })
 
 
 // global error middleware

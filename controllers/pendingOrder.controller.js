@@ -6,17 +6,17 @@ const ApiError = require("../utils/ApiError");
 
 
 // get all pending orders 
-const pendingOrders = async(_,res,next)=>{
-    try {
+const pendingOrders = async (_, res, next) => {
+  try {
     const pending_orders = await PendingOrder.find();
-    if(pending_orders.length === 0){
-        return res.status(200).json(new ApiResponse(200,"No orders found"));
+    if (pending_orders.length === 0) {
+      return res.status(200).json(new ApiResponse(200, "No orders found"));
     }
-    res.status(200).json(new ApiResponse(200,"All orders fetched successfully.",pending_orders));
-        
-    } catch (error) {
-        next(error)
-    }
+    res.status(200).json(new ApiResponse(200, "All orders fetched successfully.", pending_orders));
+
+  } catch (error) {
+    next(error)
+  }
 }
 
 
@@ -63,7 +63,7 @@ const addToConfirmOrders = async (req, res, next) => {
     } = req.body;
 
     // 1. Validate required fields
-    if ([ order_id, styleNumber, size, quantity, order_date, shipping_method, order_status, contact_number, payment_status ].some((item) => !item)) {
+    if ([order_id, styleNumber, size, quantity, order_date, shipping_method, order_status, contact_number, payment_status].some((item) => !item)) {
       return next(new ApiError(400, "All fields are required."));
     }
 
@@ -115,7 +115,7 @@ const addToCancelOrders = async (req, res, next) => {
     } = req.body;
 
     // 1. Validate required fields
-    if ([ order_id, styleNumber, size, quantity, order_date, shipping_method, order_status, contact_number, payment_status ].some((item) => !item)) {
+    if ([order_id, styleNumber, size, quantity, order_date, shipping_method, order_status, contact_number, payment_status].some((item) => !item)) {
       return next(new ApiError(400, "All fields are required."));
     }
 
@@ -151,9 +151,31 @@ const addToCancelOrders = async (req, res, next) => {
 };
 
 
+// **************************** edit pending orders *****************************
+
+
+const editPendingOrders = async (req, res, next) => {
+  try {
+    const { id, size } = req.body;
+    if (!id) {
+      return next(new ApiError(400, "id param is required"));
+    }
+    let orderForEdit = await PendingOrder.findById(id);
+    if (!orderForEdit) {
+      return next(new ApiError(404, `${id} not found for edit order.`))
+    }
+
+    orderForEdit.size = size;
+    await orderForEdit.save();
+
+    res.status(200).json(new ApiResponse(200, `${orderForEdit.order_id} updated successfully`, orderForEdit));
+
+  } catch (error) {
+    next(error);
+  }
+}
 
 
 
 
-
-module.exports = {addToPendingOrder , addToCancelOrders, addToConfirmOrders,pendingOrders};
+module.exports = { addToPendingOrder, addToCancelOrders, addToConfirmOrders, pendingOrders, editPendingOrders };
