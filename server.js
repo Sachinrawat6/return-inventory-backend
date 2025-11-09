@@ -9,6 +9,7 @@ const returnTableRoutes = require("./routes/returnTable.route");
 const pressTableRoutes = require("./routes/pressTable.route");
 const shipReturnRoutes = require("./routes/shipReturn.route");
 const inventoryTableRoutes = require("./routes/inventoryTable.route");
+const returnLogRoutes = require("./routes/returnLog.routes")
 // const mrpLabelRoutes = require("./routes/labelRoutes");
 // const nocodbRoutes = require("./routes/nocoDB.routes");
 const shopifyPendingOrdersRoutes = require("./routes/pendingOrder.routes")
@@ -29,6 +30,7 @@ app.use("/api/v1/return-table", returnTableRoutes);
 app.use("/api/v1/press-table", pressTableRoutes);
 app.use("/api/v1/ship-record", shipReturnRoutes)
 app.use("/api/v1/inventory-table", inventoryTableRoutes);
+app.use("/api/v1/return-log", returnLogRoutes)
 
 
 
