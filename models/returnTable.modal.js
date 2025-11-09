@@ -11,7 +11,7 @@ const returnTableSchema = new mongoose.Schema({
   },
   color: {
     type: String,
-    required: true,
+    // required: true,
   },
   channel: {
     type: String,
@@ -29,12 +29,16 @@ const returnTableSchema = new mongoose.Schema({
     type: Number,
     default: 1,
   },
-  order_id:{
-    type:Number,
-    required:true
+  order_id: {
+    type: Number,
+    default: 1
+  },
+  with_tag: {
+    type: Boolean,
+    default: false
   }
-},{timestamps:true});
+}, { timestamps: true });
 
 
-const ReturnTable = mongoose.model('ReturnTable',returnTableSchema);
+const ReturnTable = mongoose.model('ReturnTable', returnTableSchema);
 module.exports = ReturnTable;

@@ -11,7 +11,7 @@ const pressTableSchema = new mongoose.Schema({
   },
   color: {
     type: String,
-    required: true,
+    // required: true,
   },
   channel: {
     type: String,
@@ -29,12 +29,20 @@ const pressTableSchema = new mongoose.Schema({
     type: Number,
     default: 1,
   },
-  order_id:{
-    type:Number,
-    required:true
+  order_id: {
+    type: Number,
+    default: 1
+  },
+  with_tag: {
+    type: Boolean,
+    default: false
+  },
+  log_id: {
+    type: Number,
+    required: true,
   }
-},{timestamps:true});
+}, { timestamps: true });
 
 
-const PressTable = mongoose.model('PressTable',pressTableSchema);
+const PressTable = mongoose.model('PressTable', pressTableSchema);
 module.exports = PressTable;
